@@ -1,4 +1,4 @@
 tasks
 =====
 
-Simple task manager(mojolicious(perl))
+Task management web app(Flask(python))
