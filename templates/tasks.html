@@ -1,0 +1,26 @@
+<H1>Tasks({{ tasks|length }})</H1>
+
+<table>
+<tr>
+    <td>ID</td>
+    <td>Project</td>
+    <td>Tags</td>
+    <td>Description</td>
+    <td>Due</td>
+    <td>Urgency</td>
+</tr>
+{% for task in tasks %}
+    <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.project }}</td>
+        <td>
+            {% for tag in task.tags %}
+                {{ tag }}
+            {% endfor %}
+        </td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.due }}</td>
+        <td>{{ task.urgency }}</td>
+    </tr>
+{% endfor %}
+</table>

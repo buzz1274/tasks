@@ -1,9 +1,12 @@
 from flask import Flask, render_template
+from task_warrior.task_warrior import TaskWarrior
+
 app = Flask(__name__)
+tw = TaskWarrior()
 
-@app.route("/")
-def tasks():
-    return render_template('index.html')
 
-if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+@app.route('/')
+def index():
+    return render_template('tasks.html',
+                           tasks=tw.query('+OVERDUE or due.before:31days +PENDING'))
+
