@@ -11,5 +11,8 @@ class TaskWarrior:
         process = subprocess.Popen(query, stdout=subprocess.PIPE)
 
         output, error = process.communicate()
+        result = json.loads(output)
 
-        return json.loads(output)
+        result.sort(key=lambda x: x['urgency'], reverse=True)
+
+        return result
