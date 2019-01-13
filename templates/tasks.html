@@ -1,4 +1,10 @@
-<H1>Tasks({{ tasks|length }})</H1>
+<H1><a href="/">Tasks({{ tasks|length }})</a></H1>
+
+<ul>
+{% for project, task_count in projects.items() %}
+    <li><a href="/?project={{ project }}">{{ project }}({{ task_count }})</a></li>
+{% endfor %}
+</ul>
 
 <table>
 <tr>
