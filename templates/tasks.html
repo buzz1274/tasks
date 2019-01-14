@@ -25,7 +25,7 @@
             {% endfor %}
         </td>
         <td>{{ task.description }}</td>
-        <td>{{ task.due }}</td>
+        <td>{{ task.due | to_date }}</td>
         <td>{{ task.urgency }}</td>
     </tr>
 {% endfor %}

@@ -1,8 +1,22 @@
 from flask import Flask, render_template, request
 from task_warrior.task_warrior import TaskWarrior
+from datetime import datetime
 
 app = Flask(__name__)
 tw = TaskWarrior()
+
+
+@app.template_filter()
+def to_date(date):
+    if not date:
+        return '-'
+
+    date = datetime.strptime(date, '%Y%m%dT%H%M%SZ')
+
+    if not date or date.year == 2038:
+        return '-'
+
+    return date.strftime('%d %b, %Y')
 
 
 @app.route('/')
