@@ -19,6 +19,14 @@ def to_date(date):
     return date.strftime('%d %b, %Y')
 
 
+@app.template_filter()
+def format_project(project):
+    if not project:
+        return '-'
+
+    return project.replace('_', ' ').replace('.', '&nbsp;&raquo;&nbsp;')
+
+
 @app.route('/')
 def index():
     project = request.args.get('project')
