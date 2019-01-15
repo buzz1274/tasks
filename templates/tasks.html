@@ -1,32 +1,40 @@
-<H1><a href="/">Tasks({{ tasks|length }})</a></H1>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
-<ul>
-{% for project, task_count in projects.items() %}
-    <li><a href="/?project={{ project }}">{{ project }}({{ task_count }})</a></li>
-{% endfor %}
-</ul>
+<div style="width:95%;margin:0 auto;">
+    <h1><a style="color:#000;text-decoration:none;" href="/">Tasks({{ tasks|length }})</a></h1>
 
-<table>
-<tr>
-    <td>ID</td>
-    <td>Project</td>
-    <td>Tags</td>
-    <td>Description</td>
-    <td>Due</td>
-    <td>Urgency</td>
-</tr>
-{% for task in tasks %}
+    <ul class="list-inline">
+        {% for project, task_count in projects.items() %}
+            <li class="list-inline-item">
+                <a style="color:#000;text-decoration:none;border:1px solid #000;" href="/?project={{ project }}">
+                    {{ project }}({{ task_count }})
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <table class="table table-bordered">
     <tr>
-        <td>{{ task.id }}</td>
-        <td>{{ task.project }}</td>
-        <td>
-            {% for tag in task.tags %}
-                {{ tag }}
-            {% endfor %}
-        </td>
-        <td>{{ task.description }}</td>
-        <td>{{ task.due | to_date }}</td>
-        <td>{{ task.urgency }}</td>
+        <th scope="col">ID</th>
+        <th scope="col" style="width:22%">Project</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Description</th>
+        <th scope="col" style="width:12%">Due</th>
+        <th scope="col">Urgency</th>
     </tr>
-{% endfor %}
-</table>
+    {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.project }}</td>
+            <td>
+                {% for tag in task.tags %}
+                    {{ tag }}
+                {% endfor %}
+            </td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.due | to_date }}</td>
+            <td>{{ task.urgency }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>

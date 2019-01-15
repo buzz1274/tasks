@@ -24,7 +24,7 @@ def index():
     project = request.args.get('project')
 
     if project:
-        query = 'project:%s +PENDING' % (project, )
+        query = 'project:"%s" +PENDING' % (project, )
     else:
         query = '+OVERDUE or due.before:31days'
 
