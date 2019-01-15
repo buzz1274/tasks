@@ -23,7 +23,7 @@
         <th scope="col">Urgency</th>
     </tr>
     {% for task in tasks %}
-        <tr>
+        <tr style="color:{{ task.due | row_colour }};">
             <td>{{ task.id }}</td>
             <td>{{ task.project | format_project | safe }}</td>
             <td>

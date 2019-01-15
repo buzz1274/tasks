@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 from task_warrior.task_warrior import TaskWarrior
-from datetime import datetime
 
 app = Flask(__name__)
 tw = TaskWarrior()
@@ -8,10 +7,7 @@ tw = TaskWarrior()
 
 @app.template_filter()
 def to_date(date):
-    if not date:
-        return '-'
-
-    date = datetime.strptime(date, '%Y%m%dT%H%M%SZ')
+    date = tw.convert_date_to_datetime(date)
 
     if not date or date.year == 2038:
         return '-'
@@ -25,6 +21,18 @@ def format_project(project):
         return '-'
 
     return project.replace('_', ' ').replace('.', '&nbsp;&raquo;&nbsp;')
+
+
+@app.template_filter()
+def row_colour(date):
+    date = tw.convert_date_to_datetime(date)
+
+    if not date.date() or date.date() > date.now().date():
+        return '#0000FF'
+    elif date.date() == date.now().date():
+        return '#00802B'
+
+    return '#FF0000'
 
 
 @app.route('/')
