@@ -33,7 +33,7 @@
             </td>
             <td>{{ task.description }}</td>
             <td>{{ task.due | to_date }}</td>
-            <td>{{ task.urgency }}</td>
+            <td>{{ '%0.2f' | format(task.urgency) }}</td>
         </tr>
     {% endfor %}
     </table>
