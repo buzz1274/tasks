@@ -6,43 +6,48 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     </head>
     <body>
-        <div style="width:95%;margin:0 auto;">
+        <div style="width:98%;margin:0 auto;padding-top:5px;">
             <h1><a style="color:#000;text-decoration:none;" href="/">Tasks({{ tasks|length }})</a></h1>
-
-            <ul class="list-inline">
-                {% for project, task_count in projects.items() %}
-                    <li class="list-inline-item">
-                        <a style="color:#000;text-decoration:none;border:1px solid #000;" href="/?project={{ project }}">
-                            {{ project | format_project | safe }}({{ task_count }})
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            <table class="table table-bordered table-striped">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col" style="width:25%">Project</th>
-                <th scope="col">Tags</th>
-                <th scope="col">Description</th>
-                <th scope="col" style="width:12%">Due</th>
-                <th scope="col">Urgency</th>
-            </tr>
-            {% for task in tasks %}
-                <tr style="color:{{ task.due | row_colour }};">
-                    <td>{{ task.id }}</td>
-                    <td>{{ task.project | format_project | safe }}</td>
-                    <td>
-                        {% for tag in task.tags %}
-                            {{ tag }}
-                        {% endfor %}
-                    </td>
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.due | to_date }}</td>
-                    <td>{{ '%0.2f' | format(task.urgency) }}</td>
+            <div style="width:25%;float:left;word-wrap: break-word;">
+                <ul class="list-group">
+                    {% for project, task_count in projects.items() %}
+                        <li class="list-group-item list-group-flush">
+                            <a style="color:#000;text-decoration:none;" href="/?project={{ project }}">
+                                {{ project | format_project | safe }}
+                                <span class="badge badge-primary badge-pill">
+                                    {{ task_count }}
+                                </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div style="width:74%;float:right;">
+                <table class="table table-bordered table-striped">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col" style="width:25%">Project</th>
+                    <th scope="col">Tags</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" style="width:12%">Due</th>
+                    <th scope="col">Urgency</th>
                 </tr>
-            {% endfor %}
-            </table>
+                {% for task in tasks %}
+                    <tr style="color:{{ task.due | row_colour }};">
+                        <td>{{ task.id }}</td>
+                        <td>{{ task.project | format_project | safe }}</td>
+                        <td>
+                            {% for tag in task.tags %}
+                                {{ tag }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.due | to_date }}</td>
+                        <td>{{ '%0.2f' | format(task.urgency) }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
         </div>
     </body>
 </html>
