@@ -45,6 +45,7 @@ def index():
         query = '+OVERDUE or due.before:31days'
 
     return render_template('tasks.html',
-                           projects=tw.projects(),
-                           tasks=tw.search(query))
+                           projects=tw.projects,
+                           tasks=tw.search(query),
+                           task_in_inbox=tw.task_in_inbox)
 
