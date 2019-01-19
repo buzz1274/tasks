@@ -11,12 +11,19 @@
             <div style="width:25%;float:left;word-wrap: break-word;">
                 <ul class="list-group">
                     <li class="list-group-item list-group-flush">
-                        <a style="color:#000;text-decoration:none;" href="/?project=inbox">
+                        {% if not task_in_inbox %}
                             Inbox
                             <span class="badge badge-primary badge-pill">
                                 {{ task_in_inbox }}
                             </span>
-                        </a>
+                        {%  else %}
+                            <a style="color:#000;text-decoration:none;" href="/?project=inbox">
+                                Inbox
+                                <span class="badge badge-primary badge-pill">
+                                    {{ task_in_inbox }}
+                                </span>
+                            </a>
+                        {% endif %}
                     </li>
                     {% for project, task_count in projects.items() %}
                         <li class="list-group-item list-group-flush">
