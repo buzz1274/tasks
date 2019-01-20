@@ -16,6 +16,13 @@ def to_date(date):
 
 
 @app.template_filter()
+def nest_project(depth):
+    if depth:
+        return 'padding-left:{pixels}px'.format(pixels=depth * 20)
+
+    return ''
+
+@app.template_filter()
 def format_project(project):
     if not project:
         return '-'
