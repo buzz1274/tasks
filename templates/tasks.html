@@ -9,35 +9,7 @@
         <div style="width:98%;margin:0 auto;padding-top:5px;">
             <h1><a style="color:#000;text-decoration:none;" href="/">Tasks({{ tasks|length }})</a></h1>
             <div style="width:25%;float:left;word-wrap: break-word;">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-flush">
-                        {% if not task_in_inbox %}
-                            Inbox
-                            <span class="badge badge-primary badge-pill">
-                                {{ task_in_inbox }}
-                            </span>
-                        {%  else %}
-                            <a style="color:#000;text-decoration:none;" href="/?project=inbox">
-                                Inbox
-                                <span class="badge badge-primary badge-pill">
-                                    {{ task_in_inbox }}
-                                </span>
-                            </a>
-                        {% endif %}
-                    </li>
-                    {% for key, project in projects.items() %}
-                        <li class="list-group-item list-group-flush">
-                            <a style="color:#000;text-decoration:none;" href="/?project={{ key }}">
-                                <span style="{{ project.depth | nest_project }}">
-                                    {{ project.project_display_name | safe }}
-                                </span>
-                                <span class="badge badge-primary badge-pill">
-                                    {{ project.task_count }}
-                                </span>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                {% include 'projects.html' %}
             </div>
             <div style="width:74%;float:right;">
                 <table class="table table-bordered table-striped">

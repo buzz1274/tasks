@@ -1,0 +1,17 @@
+{% for key, project in projects.items() %}
+    <li class="list-group-item list-group-flush">
+        <a style="color:#000;text-decoration:none;" href="/?project={{ key }}">
+            <span style="{{ project.depth | nest_project }}">
+                {{ project.project_name | safe }}
+            </span>
+            <span class="badge badge-primary badge-pill">
+                {{ project.task_count }}
+            </span>
+        </a>
+        {% if project.projects %}
+            {% with projects=project.projects.projects %}
+                {% include 'projects.html' %}
+            {% endwith %}
+        {% endif %}
+    </li>
+{% endfor %}
