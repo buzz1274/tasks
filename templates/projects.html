@@ -1,17 +1,23 @@
 {% for key, project in projects.items() %}
-    <li class="list-group-item list-group-flush">
+    <div>
+        {% if project.projects.projects %}
+        {% else %}
+        {% endif %}
         <a style="color:#000;text-decoration:none;" href="/?project={{ key }}">
-            <span style="{{ project.depth | nest_project }}">
+            <span style="padding-left:{{ padding }}px">
                 {{ project.project_name | safe }}
             </span>
             <span class="badge badge-primary badge-pill">
                 {{ project.task_count }}
             </span>
         </a>
-        {% if project.projects %}
-            {% with projects=project.projects.projects %}
-                {% include 'projects.html' %}
-            {% endwith %}
+        {% if project.projects.projects %}
+            <div id="full-tw-project-name" style="display:block;">
+                {% with projects=project.projects.projects,
+                        padding = padding + 20 %}
+                    {% include 'projects.html' %}
+                {% endwith %}
+            </div>
         {% endif %}
-    </li>
+    </div>
 {% endfor %}

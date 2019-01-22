@@ -16,6 +16,7 @@ class Tasks(TaskWarrior):
         self.tasks = self.search()
 
         self.hydrate()
+        self.projects.sort()
 
     """
     doc block goes in here

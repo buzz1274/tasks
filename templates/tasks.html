@@ -9,7 +9,9 @@
         <div style="width:98%;margin:0 auto;padding-top:5px;">
             <h1><a style="color:#000;text-decoration:none;" href="/">Tasks({{ tasks|length }})</a></h1>
             <div style="width:25%;float:left;word-wrap: break-word;">
-                {% include 'projects.html' %}
+                {% with padding = 0 %}
+                    {% include 'projects.html' %}
+                {% endwith %}
             </div>
             <div style="width:74%;float:right;">
                 <table class="table table-bordered table-striped">
