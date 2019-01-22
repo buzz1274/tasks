@@ -1,18 +1,23 @@
-{% for key, project in projects.items() %}
+{% for project_id, project in projects.items() %}
     <div>
-        {% if project.projects.projects %}
-        {% else %}
-        {% endif %}
-        <a style="color:#000;text-decoration:none;" href="/?project={{ key }}">
-            <span style="padding-left:{{ padding }}px">
+        <span style="padding-left:{{ padding }}px">
+            {% if project.projects.projects %}
+                <span data-project="{{ project_id }}"
+                      class="expand_project oi oi-chevron-right"></span>
+            {% else %}
+                <span style="padding-left:16px;" />
+            {% endif %}
+            <a style="color:#000;text-decoration:none;"
+               href="/?project={{ project_id }}">
                 {{ project.project_name | safe }}
-            </span>
-            <span class="badge badge-primary badge-pill">
-                {{ project.task_count }}
-            </span>
+            </a>
+        </span>
+        <span class="badge badge-primary badge-pill">
+            {{ project.task_count }}
+        </span>
         </a>
         {% if project.projects.projects %}
-            <div id="full-tw-project-name" style="display:block;">
+            <div id="{{ project_id }}" style="display:none;">
                 {% with projects=project.projects.projects,
                         padding = padding + 20 %}
                     {% include 'projects.html' %}

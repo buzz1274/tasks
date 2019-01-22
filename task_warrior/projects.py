@@ -31,6 +31,9 @@ class Projects(TaskWarrior):
 
         self.projects[project_id].increment_task_count()
 
+    """
+    doc block goes in here
+    """
     def get_project_id(self, project):
         if not self.parent:
             return project
