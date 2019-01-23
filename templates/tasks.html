@@ -50,11 +50,20 @@
 
                 if($("#" + selector).css('display') == 'block') {
                     var display = 'none';
+
+                    $(this).toggleClass('oi-chevron-right', 'add');
+                    $(this).toggleClass('oi-chevron-bottom', 'remove');
                 } else {
-                    var display = 'block'
+                    var display = 'block';
+
+                    $(this).toggleClass('oi-chevron-bottom', 'add');
+                    $(this).toggleClass('oi-chevron-right', 'remove');
                 }
 
                 $("#" + selector).css('display', display);
+                //$(this).removeClass('oi oi-chevron-right');
+                //$(this).addClass('oi oi-chevron-down');
+
             });
         </script>
     </body>
