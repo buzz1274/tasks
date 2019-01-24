@@ -7,10 +7,14 @@
             {% else %}
                 <span style="padding-left:16px;" />
             {% endif %}
-            <a style="color:#000;text-decoration:none;"
-               href="/?project={{ project_id }}">
+            {% if project.task_count %}
+                <a style="color:#000;text-decoration:none;"
+                   href="/?project={{ project_id }}">
+                    {{ project.project_name | safe }}
+                </a>
+            {% else %}
                 {{ project.project_name | safe }}
-            </a>
+            {% endif %}
         </span>
         <span class="badge badge-primary badge-pill">
             {{ project.task_count }}
