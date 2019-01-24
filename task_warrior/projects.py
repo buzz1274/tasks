@@ -11,7 +11,7 @@ class Projects(TaskWarrior):
     doc block goes in here
     """
     def __init__(self, parent=''):
-        self.projects = {}
+        self.projects = collections.OrderedDict()
         self.parent = parent
 
     """
@@ -20,16 +20,29 @@ class Projects(TaskWarrior):
     def hydrate(self, project_hierarchy):
         project_id = self.get_project_id(project_hierarchy[0])
 
-        if project_id not in self.projects:
-            self.projects[project_id] = Project(
-                project_name=project_hierarchy[0],
-                projects=Projects(parent=project_id))
+        self.add(project_id=project_id,
+                 project_name=project_hierarchy[0])
 
         if len(project_hierarchy[1:]) >= 1:
             self.projects[project_id].projects.\
                 hydrate(project_hierarchy[1:])
 
         self.projects[project_id].increment_task_count()
+
+    """
+    doc block goes in here
+    """
+    def add(self, project_id, project_name, task_count=0, last=True):
+        if project_id not in self.projects:
+            project = {project_id: Project(
+                    project_name=project_name,
+                    task_count=task_count,
+                    projects=Projects(parent=project_id))}
+
+            self.projects.update(project)
+
+            if not last:
+                self.projects.move_to_end(project_id, last=last)
 
     """
     doc block goes in here

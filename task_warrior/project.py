@@ -9,9 +9,10 @@ class Project:
     """
     doc block goes in here
     """
-    def __init__(self, project_name, projects):
+    def __init__(self, project_name, projects, task_count):
         self.project_name = project_name
         self.projects = projects
+        self.task_count = task_count
 
     """
     doc block goes in here

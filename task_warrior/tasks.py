@@ -18,6 +18,9 @@ class Tasks(TaskWarrior):
 
         self.hydrate()
         self.projects.sort()
+        self.projects.add('inbox', 'Inbox', self.tasks_in_inbox, False)
+        self.projects.add('no_project', 'No Project',
+                          self.tasks_with_no_project)
 
     """
     doc block goes in here
