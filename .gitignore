@@ -21,3 +21,4 @@ nytprof.out
 *.iml
 .idea/
 .pytest_cache
+.cache
