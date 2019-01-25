@@ -1,9 +1,8 @@
 import collections
-from .task_warrior import TaskWarrior
 from .project import Project
 
 
-class Projects(TaskWarrior):
+class Projects:
     projects = None
     parent = ''
 

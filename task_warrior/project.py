@@ -1,5 +1,3 @@
-
-
 class Project:
     project_name = ''
     task_warrior_name = ''
