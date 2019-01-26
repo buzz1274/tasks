@@ -19,8 +19,6 @@ class Tasks(TaskWarrior):
         self.hydrate()
         self.projects.sort()
         self.projects.add('inbox', 'Inbox', self.tasks_in_inbox, False)
-        self.projects.add('no_project', 'No Project',
-                          self.tasks_with_no_project)
 
     """
     doc block goes in here
@@ -41,9 +39,7 @@ class Tasks(TaskWarrior):
     doc block goes in here
     """
     def hydrate_projects(self, task):
-        if 'project' not in task:
-            self.tasks_with_no_project += 1
-        elif task['project'] == 'inbox':
+        if 'project' not in task or task['project'] == 'inbox':
             self.tasks_in_inbox += 1
         else:
             self.projects.hydrate(task['project'].split('.'))
