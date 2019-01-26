@@ -1,0 +1,28 @@
+[{
+    "id":1,
+    "project":"project_1"
+  },
+  {
+    "id":2,
+    "project":"project_2"
+  },
+  {
+    "id":3,
+    "project":"project_3"
+  },
+  {
+    "id":4,
+    "project":"project_1.sub_project_1"
+  },
+  {
+    "id":5,
+    "project":"project_1.sub_project_2.sub_sub_project_1"
+  },
+  {
+    "id":6
+  },
+  {
+    "id":7,
+    "project":"project_4"
+  }
+]

@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 from task_warrior.task_warrior import TaskWarrior
-from task_warrior.projects import Projects
 from task_warrior.tasks import Tasks
 
 app = Flask(__name__)
@@ -50,6 +49,5 @@ def index():
 
     return render_template('tasks.html',
                            projects=tasks.projects.projects,
-                           tasks=tw.search(query),
-                           task_in_inbox=tw.task_in_inbox)
+                           tasks=tw.search(query))
 
