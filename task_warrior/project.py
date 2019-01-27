@@ -15,5 +15,5 @@ class Project:
     """
     doc block goes in here
     """
-    def increment_task_count(self):
-        self.task_count += 1
+    def increment_task_count(self, count=1):
+        self.task_count += count
