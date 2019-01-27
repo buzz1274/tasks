@@ -6,7 +6,6 @@ class Tasks(TaskWarrior):
     projects = False
     tags = False
     tasks = {}
-    tasks_with_no_project = 0
     tasks_in_inbox = 0
 
     """
