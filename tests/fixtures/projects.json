@@ -16,7 +16,11 @@
   },
   {
     "id":5,
-    "project":"project_1.sub_project_2.sub_sub_project_1"
+    "project":"project_1.sub_project_3.sub_sub_project_1"
+  },
+  {
+    "id":5,
+    "project":"project_1.sub_project_2"
   },
   {
     "id":6
