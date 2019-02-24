@@ -17,7 +17,7 @@
                     {% include 'projects.html' %}
                 {% endwith %}
             </div>
-            <div style="width:74%;float:right;">
+            <a style="width:74%;float:right;">
                 <table class="table table-bordered table-striped">
                 <tr>
                     <th scope="col">ID</th>
@@ -26,6 +26,7 @@
                     <th scope="col">Description</th>
                     <th scope="col" style="width:12%">Due</th>
                     <th scope="col">Urgency</th>
+                    <th scope="col" class="text-center" style="width:8%">-</th>
                 </tr>
                 {% for task in tasks %}
                     <tr style="color:{{ task.due | row_colour }};">
@@ -39,6 +40,14 @@
                         <td>{{ task.description }}</td>
                         <td>{{ task.due | to_date }}</td>
                         <td>{{ '%0.2f' | format(task.urgency) }}</td>
+                        <td>
+                            <span style="float:left;display:inline;margin-right:10px;">
+                                <a href="" class="expand_project oi oi-check"></a>
+                            </span>
+                            <span style="float:left;display:inline">
+                                <a href="" class="expand_project oi oi-trash"></a>
+                            </span>
+                        </td>
                     </tr>
                 {% endfor %}
                 </table>

@@ -1,54 +1,54 @@
 from unittest.mock import patch
-from task_warrior.tasks import Tasks, Projects
+from task_warrior.task_warrior import TaskWarrior, Projects
 from .helper import Helper
 
 
 class TestProjects(object):
 
     def test_projects_are_hydrated_into_a_projects_object(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects')) as \
                 mocked_search:
 
-            tasks = Tasks()
+            tasks = TaskWarrior('')
 
-            mocked_search.assert_called_once()
+            mocked_search.assert_called()
 
             assert isinstance(tasks.projects, Projects)
             assert len(tasks.projects.projects) == 5
 
     def test_inbox_project_is_created(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects')):
 
-            tasks = Tasks()
+            tasks = TaskWarrior('')
 
             assert 'inbox' in tasks.projects.projects
             assert tasks.projects.projects['inbox'].task_count == 1
 
     def test_inbox_project_is_first(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects')):
 
-            tasks = Tasks()
+            tasks = TaskWarrior('')
             projects = list(tasks.projects.projects)
 
             assert projects[0] == 'inbox'
 
     def test_sub_projects_are_created(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects')):
 
-            tasks = Tasks()
+            tasks = TaskWarrior('')
 
             assert 'project_1.sub_project_1' in \
                    tasks.projects.projects['project_1'].projects.projects
 
     def test_projects_are_sorted_alphabetically(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects')):
 
-            tasks = Tasks()
+            tasks = TaskWarrior('')
             projects = list(tasks.projects.projects)
 
             assert (projects[0] == 'inbox' and projects[1] == 'project_1' and
@@ -56,9 +56,9 @@ class TestProjects(object):
                     projects[4] == 'project_4')
 
     def test_sub_projects_are_sorted_alphabeticaly(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects')):
-            tasks = Tasks()
+            tasks = TaskWarrior('')
 
             assert 'project_1' in tasks.projects.projects
 
@@ -70,10 +70,10 @@ class TestProjects(object):
                     sub_projects[2] == 'project_1.sub_project_3')
 
     def test_calling_increment_task_count_increases_tasks_count_by_one(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects')):
 
-            tasks = Tasks()
+            tasks = TaskWarrior('')
 
             assert tasks.projects.projects['inbox'].task_count == 1
 
@@ -82,10 +82,10 @@ class TestProjects(object):
             assert tasks.projects.projects['inbox'].task_count == 2
 
     def test_calling_increment_task_count_with_value_increases_tasks_count_by_value(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects')):
 
-            tasks = Tasks()
+            tasks = TaskWarrior('')
 
             assert tasks.projects.projects['inbox'].task_count == 1
 
@@ -94,10 +94,10 @@ class TestProjects(object):
             assert tasks.projects.projects['inbox'].task_count == 6
 
     def test_if_inbox_project_is_used_ensure_correct_task_count_for_project(self):
-        with patch.object(Tasks, 'search',
+        with patch.object(TaskWarrior, 'search',
                           return_value=Helper.load_fixture('projects_inbox')):
 
-            tasks = Tasks()
+            tasks = TaskWarrior('')
 
             assert tasks.projects.projects['inbox'].task_count == 3
 

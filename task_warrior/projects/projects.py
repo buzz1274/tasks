@@ -1,5 +1,5 @@
 import collections
-from .project import Project
+from task_warrior.projects.project import Project
 
 
 class Projects:
