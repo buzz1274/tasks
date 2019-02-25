@@ -1,7 +1,7 @@
 import subprocess
 import json
 from task_warrior.projects.projects import Projects
-from task_warrior.tasks.tasks import Tasks
+from task_warrior.tasks.task import Task
 
 
 class TaskWarrior:
@@ -13,18 +13,20 @@ class TaskWarrior:
     tasks_in_inbox = 0
 
     def __init__(self, query=None):
-        if query is not None:
-            self.all_raw_tasks = self.search()
-            self.filtered_raw_tasks = self.search(query)
+        self.all_raw_tasks = self.search()
 
-            self.import_task_data()
+        if query is not None:
+            self.filtered_raw_tasks = self.search(query)
+        else:
+            self.filtered_raw_tasks = self.all_raw_tasks
+
+        self.import_task_data()
 
     def import_task_data(self):
         """
         doc block goes in here
         """
         self.projects = Projects()
-        self.tasks = Tasks()
 
         for task in self.all_raw_tasks:
             self.hydrate_projects(task)
@@ -57,7 +59,7 @@ class TaskWarrior:
         """
         doc block goes in here
         """
-        pass
+        self.tasks[task['uuid']] = Task().hydrate(task)
 
     def hydrate_projects(self, task):
         """
@@ -69,6 +71,12 @@ class TaskWarrior:
             self.projects.hydrate(task['project'].split('.'))
 
     def hydrate_tags(self, task):
+        """
+        doc block goes in here
+        """
+        pass
+
+    def complete(self, task_id):
         """
         doc block goes in here
         """

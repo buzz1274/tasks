@@ -1,32 +1,40 @@
 [{
     "id":1,
+    "uuid": "a1a",
     "project":"project_1"
   },
   {
     "id":2,
+    "uuid": "a2a",
     "project":"project_3"
   },
   {
     "id":3,
+    "uuid": "a3a",
     "project":"project_2"
   },
   {
     "id":4,
+    "uuid": "a4a",
     "project":"project_1.sub_project_1"
   },
   {
     "id":5,
+    "uuid": "a5a",
     "project":"project_1.sub_project_3.sub_sub_project_1"
   },
   {
-    "id":5,
+    "id":6,
+    "uuid": "a6a",
     "project":"project_1.sub_project_2"
   },
   {
-    "id":6
+    "id":7,
+    "uuid": "a7a"
   },
   {
-    "id":7,
+    "id":8,
+    "uuid": "a8a",
     "project":"project_4"
   }
 ]

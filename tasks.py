@@ -50,6 +50,12 @@ def index():
 
 @app.route('/task/<int:task_id>/complete')
 def complete(task_id):
-    print(task_id)
-    #tasks.complete(33)
-    return jsonify(success=True)
+    task_warrior = TaskWarrior()
+    response = {}
+
+    if not task_warrior.complete(task_id):
+        response['success'] = False
+    else:
+        response['success'] = True
+
+    return jsonify(response)
