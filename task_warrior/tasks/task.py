@@ -26,4 +26,4 @@ class Task:
             else:
                 setattr(self, key, value)
 
-        print(self.__dict__)
+        return self

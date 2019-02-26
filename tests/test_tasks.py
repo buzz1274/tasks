@@ -18,13 +18,8 @@ class TestTasks(object):
 
             mocked_search.assert_called()
 
-            print(tasks.tasks)
-            print("HERP")
-            print(tasks.tasks['a1a'])
-            print("DONE")
-
             assert hasattr(tasks.tasks['a1a'], 'id')
 
             for task_property in task_properties:
-                assert getattr(tasks.tasks['a1a'], task_property) is not None
+                assert hasattr(tasks.tasks['a1a'], task_property)
 
