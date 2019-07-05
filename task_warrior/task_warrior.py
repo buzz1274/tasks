@@ -1,7 +1,8 @@
 import subprocess
 import json
-from task_warrior.projects.projects import Projects
-from task_warrior.tasks.task import Task
+from .projects.projects import Projects
+from .tasks.tasks import Tasks
+from .tasks.task import Task
 
 
 class TaskWarrior:
@@ -20,20 +21,21 @@ class TaskWarrior:
         else:
             self.filtered_raw_tasks = self.all_raw_tasks
 
-        self.import_task_data()
+        self.hydrate()
 
-    def import_task_data(self):
+    def hydrate(self):
         """
         doc block goes in here
         """
         self.projects = Projects()
+        #self.tasks = Tasks()
 
         for task in self.all_raw_tasks:
             self.hydrate_projects(task)
             self.hydrate_tags(task)
 
         for task in self.filtered_raw_tasks:
-            self.hydrate_tasks(task)
+            self.tasks[task['uuid']] = Task().hydrate(task)
 
         self.house_keep_task_data()
 
@@ -55,32 +57,31 @@ class TaskWarrior:
         self.projects.sort()
         self.projects.add('inbox', 'Inbox', self.tasks_in_inbox, False)
 
-    def hydrate_tasks(self, task):
-        """
-        doc block goes in here
-        """
-        self.tasks[task['uuid']] = Task().hydrate(task)
-
-    def hydrate_projects(self, task):
-        """
-        doc block goes in here
-        """
-        if 'project' not in task or task['project'] == 'inbox':
-            self.tasks_in_inbox += 1
-        else:
-            self.projects.hydrate(task['project'].split('.'))
-
     def hydrate_tags(self, task):
         """
         doc block goes in here
         """
         pass
 
-    def complete(self, task_id):
+    def complete(self, task_uuid):
         """
         doc block goes in here
         """
-        pass
+        if task_uuid not in self.tasks:
+            raise IndexError
+
+        self.execute("task id:%d complete" %
+                     (self.tasks[task_uuid].get('task_id'), ))
+
+    def delete(self, task_uuid):
+        """
+        doc block goes in here
+        """
+        if task_uuid not in self.tasks:
+            raise IndexError
+
+        self.execute(("task id:%d delete" %
+                      (self.tasks[task_uuid].id, )).split())
 
     def search(self, query=''):
         """
@@ -100,5 +101,8 @@ class TaskWarrior:
 
         output, error = process.communicate()
 
-        return json.loads(output)
+        if 'export' in query:
+            return json.loads(output)
+        else:
+            return output
 

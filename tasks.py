@@ -48,14 +48,20 @@ def index():
                            projects=task_warrior.projects.projects,
                            tasks=task_warrior.filtered_raw_tasks)
 
-@app.route('/task/<int:task_id>/complete')
-def complete(task_id):
+@app.route('/task/<string:task_uuid>/complete')
+def complete(task_uuid):
     task_warrior = TaskWarrior()
     response = {}
 
-    if not task_warrior.complete(task_id):
-        response['success'] = False
-    else:
+    try:
+        task_warrior.complete(task_uuid)
+
         response['success'] = True
+    except IndexError:
+        #raise 404
+        response['success'] = False
+    except Exception:
+        #raise 500
+        response['success'] = False
 
     return jsonify(response)
