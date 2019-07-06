@@ -70,8 +70,8 @@ class TaskWarrior:
         if task_uuid not in self.tasks:
             raise IndexError
 
-        self.execute("task id:%d complete" %
-                     (self.tasks[task_uuid].get('task_id'), ))
+        self.execute(("task id:%d done" %
+                      (self.tasks[task_uuid].id, )).split())
 
     def delete(self, task_uuid):
         """

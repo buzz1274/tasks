@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, redirect
 from task_warrior.task_warrior import TaskWarrior
 from task_warrior.helper import Helper
 
@@ -36,6 +36,7 @@ def row_colour(date):
 @app.route('/')
 def index():
     project = request.args.get('project')
+    complete = request.args.get('complete')
 
     if project:
         query = 'project:"%s" +PENDING' % (project, )
@@ -44,24 +45,23 @@ def index():
 
     task_warrior = TaskWarrior(query)
 
+
     return render_template('tasks.html',
                            projects=task_warrior.projects.projects,
-                           tasks=task_warrior.filtered_raw_tasks)
+                           tasks=task_warrior.filtered_raw_tasks,
+                           complete=complete)
 
 @app.route('/task/<string:task_uuid>/complete')
 def complete(task_uuid):
     task_warrior = TaskWarrior()
-    response = {}
 
     try:
         task_warrior.complete(task_uuid)
 
-        response['success'] = True
+        complete = "success"
     except IndexError:
-        #raise 404
-        response['success'] = False
+        complete = "failure"
     except Exception:
-        #raise 500
-        response['success'] = False
+        complete = "failure"
 
-    return jsonify(response)
+    return redirect("{}&complete={}".format(request.referrer, complete))

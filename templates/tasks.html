@@ -8,6 +8,11 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                 crossorigin="anonymous"></script>
+        <style>
+            body, table {
+                font-size:0.9em;
+            }
+        </style>
     </head>
     <body>
         <div style="width:98%;margin:0 auto;padding-top:5px;">
@@ -17,7 +22,18 @@
                     {% include 'projects.html' %}
                 {% endwith %}
             </div>
-            <a style="width:74%;float:right;">
+            <div style="width:74%;float:right;">
+                {% if complete %}
+                    {% if complete == 'success' %}
+                        <div class="alert alert-success" role="alert">
+                            Task completed
+                        </div>
+                    {% else %}
+                        <div class="alert alert-danger" role="alert">
+                            An error occured completing the task
+                        </div>
+                    {% endif %}
+                {% endif %}
                 <table class="table table-bordered table-striped">
                 <tr>
                     <th scope="col">ID</th>
@@ -42,10 +58,10 @@
                         <td>{{ '%0.2f' | format(task.urgency) }}</td>
                         <td>
                             <span style="float:left;display:inline;margin-right:10px;">
-                                <a href="" class="expand_project oi oi-check"></a>
+                                <a href="/task/{{ task.uuid }}/complete" class="oi oi-check"></a>
                             </span>
                             <span style="float:left;display:inline">
-                                <a href="" class="expand_project oi oi-trash"></a>
+                                <a href="/task/{{ task.uuid }}/delete" class="oi oi-trash"></a>
                             </span>
                         </td>
                     </tr>
@@ -54,6 +70,10 @@
             </div>
         </div>
         <script>
+            setTimeout(function(){
+                $(".alert").fadeOut(400);
+            }, 1000);
+
             $(".expand_project").click(function() {
                 var selector = $.escapeSelector($(this).data("project"));
 
