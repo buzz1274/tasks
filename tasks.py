@@ -1,3 +1,4 @@
+from urllib import parse
 from flask import Flask, render_template, request, redirect
 from task_warrior.task_warrior import TaskWarrior
 from task_warrior.helper import Helper
@@ -51,6 +52,24 @@ def index():
                            tasks=task_warrior.filtered_raw_tasks,
                            complete=complete)
 
+@app.route('/due/sunday/high_priority')
+def hp_sunday():
+    task_warrior = TaskWarrior('priority:H and due.before:sunday')
+
+    return render_template('tasks.html',
+                           projects=task_warrior.projects.projects,
+                           tasks=task_warrior.filtered_raw_tasks,
+                           complete=complete)
+
+@app.route('/due/7days/high_priority')
+def hp_7days():
+    task_warrior = TaskWarrior('priority:H and due.before:7days')
+
+    return render_template('tasks.html',
+                           projects=task_warrior.projects.projects,
+                           tasks=task_warrior.filtered_raw_tasks,
+                           complete=complete)
+
 @app.route('/task/<string:task_uuid>/complete')
 def complete(task_uuid):
     task_warrior = TaskWarrior()
@@ -63,5 +82,7 @@ def complete(task_uuid):
         complete = "failure"
     except Exception:
         complete = "failure"
+
+    qs = parse.urlparse(request.referrer)
 
     return redirect("{}&complete={}".format(request.referrer, complete))
