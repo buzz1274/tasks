@@ -54,7 +54,7 @@ def index():
 
 @app.route('/due/today/high_priority')
 def hp_today():
-    task_warrior = TaskWarrior('priority:H and due.before:sunday')
+    task_warrior = TaskWarrior('priority:H and due.before:tomorrow')
 
     return render_template('tasks.html',
                            projects=task_warrior.projects.projects,
