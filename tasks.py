@@ -52,27 +52,22 @@ def index():
                            tasks=task_warrior.filtered_raw_tasks,
                            complete=complete)
 
-@app.route('/due/today/high_priority')
-def hp_today():
-    task_warrior = TaskWarrior('priority:H and due.before:tomorrow')
+@app.route('/filter/')
+def task_filter():
+    priority = request.args.get('priority')
+    due = request.args.get('due')
+    query = ''
 
-    return render_template('tasks.html',
-                           projects=task_warrior.projects.projects,
-                           tasks=task_warrior.filtered_raw_tasks,
-                           complete=complete)
+    if priority:
+        query = 'priority:%s' % (priority,)
 
-@app.route('/due/sunday/high_priority')
-def hp_sunday():
-    task_warrior = TaskWarrior('priority:H and due.before:sunday')
+    if due:
+        if query:
+            query = '%s and ' % (query,)
 
-    return render_template('tasks.html',
-                           projects=task_warrior.projects.projects,
-                           tasks=task_warrior.filtered_raw_tasks,
-                           complete=complete)
+        query = '%s due.before:%s' % (query, due,)
 
-@app.route('/due/7days/high_priority')
-def hp_7days():
-    task_warrior = TaskWarrior('priority:H and due.before:7days')
+    task_warrior = TaskWarrior(query)
 
     return render_template('tasks.html',
                            projects=task_warrior.projects.projects,
