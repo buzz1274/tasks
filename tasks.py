@@ -1,9 +1,10 @@
 from urllib import parse
-from flask import Flask, render_template, request, redirect
+from flask import Flask, flash, render_template, request, redirect
 from task_warrior.task_warrior import TaskWarrior
 from task_warrior.helper import Helper
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.template_filter()
 def to_date(date):
@@ -59,13 +60,13 @@ def task_filter():
     query = ''
 
     if priority:
-        query = 'priority:%s' % (priority,)
+        query = 'priority:{}'.format(priority)
 
     if due:
         if query:
-            query = '%s and ' % (query,)
+            query = '{} and '.format(query)
 
-        query = '%s due.before:%s' % (query, due,)
+        query = '{} due.before:{}'.format(query, due)
 
     task_warrior = TaskWarrior(query)
 
@@ -74,6 +75,21 @@ def task_filter():
                            tasks=task_warrior.filtered_raw_tasks,
                            complete=complete)
 
+@app.route('/task/<string:task_uuid>/delete')
+def delete(task_uuid):
+    task_warrior = TaskWarrior()
+
+    try:
+        task_warrior.delete(task_uuid)
+
+        flash('Task Deleted', 'success')
+    except IndexError:
+        flash('An error occurred deleting the task', 'danger')
+    except Exception:
+        flash('An error occurred deleting the task', 'danger')
+
+    return redirect(request.referrer)
+
 @app.route('/task/<string:task_uuid>/complete')
 def complete(task_uuid):
     task_warrior = TaskWarrior()
@@ -81,12 +97,10 @@ def complete(task_uuid):
     try:
         task_warrior.complete(task_uuid)
 
-        complete = "success"
+        flash('Task Completed', 'success')
     except IndexError:
-        complete = "failure"
+        flash('An error occurred completing the task', 'danger')
     except Exception:
-        complete = "failure"
+        flash('An error occurred completing the task', 'danger')
 
-    qs = parse.urlparse(request.referrer)
-
-    return redirect("{}&complete={}".format(request.referrer, complete))
+    return redirect(request.referrer)
