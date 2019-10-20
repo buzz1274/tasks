@@ -10,10 +10,10 @@
             {% if project.task_count %}
                 <a style="color:#000;text-decoration:none;"
                    href="/?project={{ project_id }}">
-                    {{ project.project_name | safe }}
+                    {{ project.project_name | format_project | safe }}
                 </a>
             {% else %}
-                {{ project.project_name | safe }}
+                {{ project.project_name | format_project | safe }}
             {% endif %}
         </span>
         <span class="badge badge-primary badge-pill">
